@@ -5,8 +5,8 @@
 #txt file with the vm list. Make list manually or use "Get-VM -Name | Format-List" from Connect-VIServer. 
 #Make sure the presence servers are in the presence list and not in the regular vm list
 #Shutting down the presence servers before the other servers are down causes issues, need to make sure presence servers start up before the others as well
-$primary_vm_list = Get-Content C:\Scripts\testscripts\test_vmlist.txt
-$presence_vm_list = Get-Content C:\Scripts\testscripts\testpresence_vmlist.txt 
+$primary_vm_list = Get-Content C:\Scripts\testscripts\vmlist.txt
+$presence_vm_list = Get-Content C:\Scripts\testscripts\presence_vmlist.txt 
 
 #Create the xml file using the following:
 # New-VICredentialStoreItem -Host <hostname> -User <username> -Password <pass> -File C:\Scripts\<nameoffile>.xml
