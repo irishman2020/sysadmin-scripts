@@ -29,12 +29,9 @@ Connect-VIServer -Server $creds.Host -user $creds.User -password $creds.Password
 #Runs through the primary vm list and shuts down those servers. The script will verify that they are down after 15 seconds, and move on if they are.
 #If they are not down, it will repeat unless the timeout has been reached (currently 30 seconds, need to update before production)
 do {
-    foreach ($vm in $primary_vm_list) {
-        Shutdown-VMGuest -VM $vm -WhatIf # Change to -Confirm:$false when ready for production
-        Write-Output "Sending shutdown command to $vm at $(Get-TimeStamp)."
-    }
+    Shutdown-VMGuest -VM $primary_vm_list -WhatIf # Change to -Confirm:$false when ready for production
     Start-Sleep -Seconds 15
-    $results = $primary_vm_list | Test-NetConnection -Port 8443 -InformationLevel Quiet
+    $results = $primary_vm_List | Test-NetConnection -Port 8443 -InformationLevel Quiet
 } while ($results -contains $true -and $stopwatch.elapsed -lt $timeout)
 
 #add -force - Stop-VMGuest if timeout is reached (review before production)
@@ -45,13 +42,10 @@ Write-Output "$(Get-TimeStamp) - All VM's except presense servers are shutdown."
 #Runs through the presence vm list and shuts down those servers. The script will verify that they are down after 15 seconds, and move on if they are.
 #If they are not down, it will repeat unless the timeout has been reached (currently 30 seconds, need to update before production)
 do {
-    foreach ($vm in $presence_vm_list) {
-        Shutdown-VMGuest -VM $vm -WhatIf # Change to -Confirm:$false when ready for production
-        Write-Output "Sending shutdown command to $vm at $(Get-TimeStamp)."
-    }
+    Shutdown-VMGuest -VM $presence_vm_list -WhatIf # Change to -Confirm:$false when ready for production
     Start-Sleep -Seconds 15
-    $results = $presence_vm_list | Test-NetConnection -Port 8443 -InformationLevel Quiet
-} while ($stopwatch.elapsed -lt $timeout) #($results -contains $true -and $stopwatch.elapsed -lt $timeout) #swap before production
+    $results = $presence_vm_List | Test-NetConnection -Port 8443 -InformationLevel Quiet
+} while ($results -contains $true -and $stopwatch.elapsed -lt $timeout)
 
 #add -force - Stop-VMGuest if timeout is reached (review before production)
 
