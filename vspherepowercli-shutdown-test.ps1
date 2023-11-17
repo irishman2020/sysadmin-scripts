@@ -13,7 +13,7 @@ $presence_vm_list = Get-Content C:\Scripts\testscripts\presence_vmlist.txt
 $creds = Get-VICredentialStoreItem -file C:\Scripts\vicredentials.xml
 
 #Sets the timeout for server shutdown so that the do while loops don't hang, but start a forced shutdown 
-$timeout = New-TimeSpan -Seconds 15
+$timeout = New-TimeSpan -Seconds 30
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 #Declare Get Time Stamp Function
